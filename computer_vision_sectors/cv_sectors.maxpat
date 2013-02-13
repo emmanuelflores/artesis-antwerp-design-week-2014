@@ -30,13 +30,40 @@
 				"box" : 				{
 					"fontname" : "Osaka",
 					"fontsize" : 9.0,
+					"id" : "obj-31",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 190.0, 57.0, 33.0, 16.0 ],
+					"text" : "close"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontname" : "Osaka",
+					"fontsize" : 9.0,
+					"id" : "obj-16",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 144.25, 57.0, 32.5, 16.0 ],
+					"text" : "open"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontname" : "Osaka",
+					"fontsize" : 9.0,
 					"frgb" : 0.0,
 					"id" : "obj-50",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 584.0, 566.0, 150.0, 18.0 ],
-					"presentation_rect" : [ 587.0, 563.0, 0.0, 0.0 ],
 					"text" : "<<jasch collection external"
 				}
 
@@ -744,6 +771,15 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-14", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-16", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-20", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
@@ -756,7 +792,7 @@
 					"destination" : [ "obj-26", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"source" : [ "obj-20", 0 ]
+					"source" : [ "obj-19", 0 ]
 				}
 
 			}
@@ -765,7 +801,7 @@
 					"destination" : [ "obj-32", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"source" : [ "obj-20", 0 ]
+					"source" : [ "obj-19", 0 ]
 				}
 
 			}
@@ -802,6 +838,15 @@
 					"disabled" : 0,
 					"hidden" : 0,
 					"source" : [ "obj-3", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-14", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-31", 0 ]
 				}
 
 			}
@@ -1071,7 +1116,7 @@
 		"dependency_cache" : [ 			{
 				"name" : "cv.jit.blobs.centroids.draw.maxpat",
 				"bootpath" : "/Applications/Max6/Cycling '74/cv.jit_OSX_v1.7.1/cv.jit-support/Abstractions",
-				"patcherrelativepath" : "../../../Applications/Max6/Cycling '74/cv.jit_OSX_v1.7.1/cv.jit-support/Abstractions",
+				"patcherrelativepath" : "../../../../../../Applications/Max6/Cycling '74/cv.jit_OSX_v1.7.1/cv.jit-support/Abstractions",
 				"type" : "JSON",
 				"implicit" : 1
 			}
