@@ -106,7 +106,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
-					"patching_rect" : [ 234.0, 43.0, 105.0, 26.0 ],
+					"patching_rect" : [ 234.0, 40.5, 105.0, 26.0 ],
 					"text" : "random 200"
 				}
 

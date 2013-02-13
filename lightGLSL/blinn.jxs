@@ -1,0 +1,85 @@
+<jittershader name="blinn">
+
+	<language name="glsl" version="1.0">
+
+		<program name="vp" type="vertex">
+<![CDATA[
+/////////////////////////////////////
+////	   		BLINN VS			////
+/////////////////////////////////////
+
+/*
+	Adpated from:
+	http://www.lighthouse3d.com/opengl/glsl/index.php?pointlight
+*/
+
+// Varyings (to Fragment Shader)
+varying vec3 normal, lightDir;
+
+// Blinn Vertex Shader
+void phongVS(in vec4 vertex)
+{
+	vec3 v = vec3(vertex.xyz / vertex.w);
+	lightDir = vec3(gl_LightSource[0].position.xyz - v);
+}
+
+// Main Loop
+void main()
+{	
+	normal = gl_NormalMatrix * gl_Normal;
+	vec4 Vertex = gl_ModelViewMatrix * gl_Vertex;
+
+	phongVS(Vertex);
+
+	//Transform vertex by modelview and projection matrices
+	gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+	
+	//Forward texture coordinates after applying texture matrix
+	gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;
+}
+]]>
+
+		</program>
+		
+		<program name="fp" type="fragment">
+<![CDATA[
+/////////////////////////////////////
+////	   		BLINN FS			////
+/////////////////////////////////////
+
+/*
+	Adpated from:
+	http://www.lighthouse3d.com/opengl/glsl/index.php?pointlight
+*/
+
+// Varyings (from Vertex Shader)
+varying vec3 normal, lightDir;
+
+// Blinn Directional Fragment Shader
+vec4 blinnDirectionalFS()
+{
+	// Ambient contribution
+	vec4 final_color = (gl_FrontLightModelProduct.sceneColor
+		* gl_FrontMaterial.ambient)
+		+ (gl_LightSource[0].ambient * gl_FrontMaterial.ambient);
+	vec3 N = normalize(normal);
+	vec3 L = normalize(lightDir);
+	float lambertTerm = dot(N,L);
+	if(lambertTerm > 0.0) {
+		// Diffuse contribution
+		final_color += gl_LightSource[0].diffuse
+				* gl_FrontMaterial.diffuse
+				* lambertTerm;
+	}
+	return final_color;
+}
+
+// Main Loop
+void main (void)
+{
+	gl_FragColor = blinnDirectionalFS();			
+}
+]]>
+		</program>
+	</language>
+</jittershader>

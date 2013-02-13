@@ -1,0 +1,101 @@
+<jittershader name="phongDirection">
+
+
+	<language name="glsl" version="1.0">
+
+
+		<program name="vp" type="vertex">
+<![CDATA[
+
+/////////////////////////////////////
+////	   PHONG DIRECTIONAL VS		////
+/////////////////////////////////////
+
+/*
+	Adapted from:
+	http://www.lighthouse3d.com/opengl/glsl/index.php?pointlight
+*/
+
+// Varyings (to Fragment Shader)
+varying vec3 normal, lightDir, halfVector;
+varying vec4 diffuse, ambient;
+
+// Phong Directional Vertex Shader function
+void phongDirectionalVS(in vec3 N)
+{
+	// Normal to FS
+	normal = normalize(gl_NormalMatrix * N);
+	// Light direction vector to FS
+	lightDir = normalize(vec3(gl_LightSource[0].position));
+	// Halfvector to FS
+	halfVector = normalize(gl_LightSource[0].halfVector.xyz);
+	// Diffuse and Ambient terms to FS
+	diffuse = gl_FrontMaterial.diffuse * gl_LightSource[0].diffuse;
+	ambient = gl_FrontMaterial.ambient * gl_LightSource[0].ambient;
+	ambient += gl_LightModel.ambient * gl_FrontMaterial.ambient;
+}
+
+// Main Loop
+void main()
+{
+	vec4 Vertex = gl_ModelViewMatrix * gl_Vertex;
+
+	phongDirectionalVS(gl_Normal);
+
+	//Transform vertex by modelview and projection matrices
+	gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+	
+	//Forward texture coordinates after applying texture matrix
+	gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;
+}
+]]>
+
+		</program>
+		
+		<program name="fp" type="fragment">
+<![CDATA[
+/////////////////////////////////////
+////	   PHONG DIRECTIONAL FS		////
+/////////////////////////////////////
+
+/*
+	Adapted from:
+	http://www.lighthouse3d.com/opengl/glsl/index.php?pointlight
+*/
+
+// Varyings (from Vertex Shader)
+varying vec3 normal, lightDir, halfVector;
+varying vec4 diffuse, ambient;
+
+// Phong Directional Fragment Shader function
+vec4 phongDirectionalFS()
+{
+	// Initialize variables
+	vec3 n, halfV;
+	float NdotL, NdotHV;
+	// Ambient term (always present)
+	vec4 final_color = ambient;
+	// Normal
+	n = normalize(normal);
+	// Diffuse + Specular components
+	NdotL = max(dot(n,lightDir),0.0);
+	if (NdotL > 0.0) {
+		final_color += diffuse * NdotL;
+		halfV = normalize(halfVector);
+		NdotHV = dot(n,halfV);
+		final_color += gl_FrontMaterial.specular
+			* gl_LightSource[0].specular
+			* pow(NdotHV, gl_FrontMaterial.shininess);
+	}
+	return final_color;
+}
+
+// Main Loop
+void main (void)
+{
+	gl_FragColor = phongDirectionalFS();			
+}
+]]>
+		</program>
+	</language>
+</jittershader>
