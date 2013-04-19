@@ -1,3 +1,5 @@
+int AMOUNT = 200;
+
 Pongy mustafa;
 
 Pongy[] harryPongy;
@@ -7,7 +9,7 @@ void setup() {
   background(255);
 
   //mustafa = new Pongy();
-  harryPongy = new Pongy[3];
+  harryPongy = new Pongy[AMOUNT];
 
   for (int i=0;i<harryPongy.length;i++) {
     float rv = random(0.9f, 0.99f);
@@ -21,9 +23,11 @@ void draw() {
   //  mustafa.render();
 
   for (int i=0;i<harryPongy.length;i++) {
+    stroke((int)random(50,255),120,120);
     harryPongy[i].move();
     harryPongy[i].collision();
     harryPongy[i].render();
   }
+
 }
 
