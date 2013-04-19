@@ -10,7 +10,8 @@ void setup() {
   harryPongy = new Pongy[3];
   
   for(int i=0;i<harryPongy.length;i++){
-    
+    float rv = random(0.9f,0.99f);
+    harryPongy[i] = new Pongy(rv);
   }
 }
 
@@ -18,5 +19,7 @@ void draw() {
 //  mustafa.move();
 //  mustafa.collision();
 //  mustafa.render();
+
+
 }
 
